@@ -15,28 +15,6 @@ A simple Android app built with **Jetpack Compose** to browse, view, and save re
 
 ---
 
-## 📂 Project Structure
-app/
-├─ src/main/
-│ ├─ java/com/zybooks/myrecipeapp/
-│ │ ├─ MainActivity.kt
-│ │ ├─ viewmodel/ # RecipeViewModel.kt
-│ │ ├─ data/ # Recipe.kt, RecipeRepository.kt
-│ │ ├─ ui/
-│ │ │ ├─ screens/ # RecipeListScreen.kt, RecipeDetailScreen.kt, FavoritesScreen.kt
-│ │ │ ├─ components/ # RecipeCard.kt
-│ │ │ └─ theme/ # Color.kt, Theme.kt, Type.kt
-│ │ └─ navigation/ # NavGraph.kt
-│ └─ assets/ # recipes.json
-├─ build.gradle (app module)
-└─ build.gradle (project)
-settings.gradle
-gradle.properties
-gradle/ # Gradle wrapper
-
-
----
-
 ## 🛠️ Setup Instructions
 
 1. **Clone the repository**
@@ -52,3 +30,22 @@ gradle/ # Gradle wrapper
 4. **Test Functionality**
    - Browse recipes, click for details, and (optionally) save favorites.
    
+## 📝 Notes
+- The app currently uses local JSON (assets/recipes.json) for recipe data.
+- imageUrl fields are empty placeholders for now; placeholder images are used in the UI.
+- Favorites functionality requires Room database setup.
+- Optional features for future updates:
+   - Integration with a web API (e.g., TheMealDB or Edamam).
+   - Camera or sensor features.
+   - Dark mode preferences using DataStore.
+
+ ## ⚡ Technologies Used
+ - Kotlin
+ - Jetpack Compose (UI, LazyColumn, Card)
+ - ViewModel + StateFlow/LiveData
+ - Navigation Compose
+ - JSON for local data storage
+ - Room Database (optional for favorites)
+
+## 📄 License
+- This project is for educational purposes and course submission.
