@@ -5,11 +5,11 @@ This document outlines the development timeline and steps for the **Recipe Finde
 ---
 
 ## Phase 1: Project Setup
-- [ ] Create a new Android Studio project with **Jetpack Compose** support.
-- [ ] Decide on an app name (e.g., RecipeVault, HomePlate).
-- [ ] Delete unnecessary test folders (`androidTest/` and `test/`) if not used.
-- [ ] Ensure `assets/` folder exists under `src/main/`.
-- [ ] Create Kotlin packages for organization:
+- [x] Create a new Android Studio project with **Jetpack Compose** support.
+- [x] Decide on an app name (e.g., RecipeVault, HomePlate).
+- [x] Delete unnecessary test folders (`androidTest/` and `test/`) if not used.
+- [x] Ensure `assets/` folder exists under `src/main/`.
+- [x] Create Kotlin packages for organization:
   - `data`
   - `viewmodel`
   - `ui.screens`
@@ -20,9 +20,9 @@ This document outlines the development timeline and steps for the **Recipe Finde
 ---
 
 ## Phase 2: Add Local Data
-- [ ] Create `recipes.json` in `assets/` with sample recipes.
-- [ ] Create `Recipe.kt` data class to define recipe structure.
-- [ ] Create `RecipeRepository.kt` to load recipes from the JSON file.
+- [x] Create `recipes.json` in `assets/` with sample recipes.
+- [x] Create `Recipe.kt` data class to define recipe structure.
+- [x] Create `RecipeRepository.kt` to load recipes from the JSON file.
 
 ---
 
