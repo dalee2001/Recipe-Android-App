@@ -35,33 +35,33 @@ This document outlines the development timeline and steps for the **Recipe Finde
 ---
 
 ## Phase 4: Build UI Screens
-- [ ] **RecipeListScreen**
+- [x] **RecipeListScreen**
   - Display recipes in a `LazyColumn`.
   - Use `RecipeCard` component for each recipe.
   - Clicking a card navigates to `RecipeDetailScreen`.
-- [ ] **RecipeDetailScreen**
+- [x] **RecipeDetailScreen**
   - Display recipe details: image, ingredients, instructions.
   - Optional: add “Save to Favorites” button.
-- [ ] **FavoritesScreen** (optional for Phase 1)
+- [x] **FavoritesScreen** (optional for Phase 1)
   - Display saved recipes.
-- [ ] **UI Components**
+- [x] **UI Components**
   - Create reusable `RecipeCard.kt` composable for recipe previews.
 
 ---
 
 ## Phase 5: Navigation
-- [ ] Create `NavGraph.kt` to define app navigation.
-- [ ] Define routes: `list` → `detail` → `favorites`.
-- [ ] Pass selected recipe ID from list to detail screen.
-- [ ] Set up `NavHost` in `MainActivity.kt`.
+- [x] Create `NavGraph.kt` to define app navigation.
+- [x] Define routes: `list` → `detail` → `favorites`.
+- [x] Pass selected recipe ID from list to detail screen.
+- [x] Set up `NavHost` in `MainActivity.kt`.
 
 ---
 
-## Phase 6: Testing Local JSON
-- [ ] Run the app and verify:
+## Phase 6: Testing Local Recipe Repository
+- [x] Run the app and verify:
   - Recipes display correctly in the list.
   - Clicking a recipe opens the detail screen.
-  - Images and data display properly (placeholder if `imageUrl` is empty).
+  - Images and data display properly (placeholder if `imageResId` is empty).
 
 ---
 
@@ -78,7 +78,7 @@ This document outlines the development timeline and steps for the **Recipe Finde
 ## Phase 8: Optional Extras
 - [ ] Add **camera or sensor integration** (Chapter 12) — e.g., photo of cooked dish.
 - [ ] Use **DataStore** to save user preferences (dark mode, etc.).
-- [ ] Replace JSON with a **web API** (TheMealDB, Edamam, etc.).
+- [ ] Replace JRecipe Repositoy with a **web API** (TheMealDB, Edamam, etc.).
 - [ ] Polish UI:
   - Colors, typography, spacing.
   - Smooth navigation and responsive performance.
