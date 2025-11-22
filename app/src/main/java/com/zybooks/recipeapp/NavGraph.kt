@@ -27,8 +27,8 @@ fun NavGraph() {
 
     // Initialize FatSecretAuth (replace with your actual clientId and clientSecret)
     val fatSecretAuth = FatSecretAuth(
-        clientId = "5b81eadb13854e29be79461062dee899 ",
-        clientSecret = "6d12db0056da45548837d9dae8ea9a74"
+        clientId = YOUR_CLIENT_ID",
+        clientSecret = "YOUR_SECRET_ID"
     )
 
     // Create FatSecretApi instance
