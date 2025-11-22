@@ -27,7 +27,7 @@ This document outlines the development timeline and steps for the **Recipe Finde
 ---
 
 ## Phase 3: ViewModel Setup
-- [ ] Create `RecipeViewModel.kt` to:
+- [X] Create `RecipeViewModel.kt` to:
   - Load recipes from the repository.
   - Expose recipes to the UI via `StateFlow` or `LiveData`.
   - Handle selected recipe state.
@@ -66,19 +66,19 @@ This document outlines the development timeline and steps for the **Recipe Finde
 ---
 
 ## Phase 7: Persistent Storage (Room)
-- [ ] Add Room database for favorites.
+- [X] Add Room database for favorites.
   - Create `RecipeDao.kt` for database queries.
   - Create `AppDatabase.kt` to set up Room.
-- [ ] Update `RecipeViewModel.kt` to handle favorites.
-- [ ] Update `FavoritesScreen` to display saved recipes.
-- [ ] Add dialogs/buttons to add/remove favorites.
+- [X] Update `RecipeViewModel.kt` to handle favorites.
+- [X] Update `FavoritesScreen` to display saved recipes.
+- [X] Add dialogs/buttons to add/remove favorites.
 
 ---
 
-## Phase 8: Optional Extras
-- [ ] Add **camera or sensor integration** (Chapter 12) — e.g., photo of cooked dish.
-- [ ] Use **DataStore** to save user preferences (dark mode, etc.).
-- [ ] Replace JRecipe Repositoy with a **web API** (TheMealDB, Edamam, etc.).
+## Phase 8: Extras
+- [X] Add **API** (Chapter 12) — e.g., Nutrition Facts
+- [X] Use **DataStore** to save user preferences (dark mode, etc.).
+- [X] Replace JRecipe Repositoy with a **web API** (TheMealDB, Edamam, etc.).
 - [ ] Polish UI:
   - Colors, typography, spacing.
   - Smooth navigation and responsive performance.
