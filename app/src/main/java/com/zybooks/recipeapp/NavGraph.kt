@@ -7,7 +7,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.zybooks.recipeapp.data.FatSecretApi
+import com.zybooks.recipeapp.data.FatSecretAuth
 import com.zybooks.recipeapp.data.RecipePreferences
+import com.zybooks.recipeapp.data.createFatSecretApi
+import com.zybooks.recipeapp.RecipeViewModel
+import com.zybooks.recipeapp.RecipeViewModelFactory
 import com.zybooks.recipeapp.screens.FavoritesScreen
 import com.zybooks.recipeapp.screens.RecipeDetailScreen
 import com.zybooks.recipeapp.screens.RecipeGalleryScreen
@@ -20,9 +25,21 @@ fun NavGraph() {
     // Initialize RecipePreferences
     val recipePreferences = RecipePreferences(context)
 
-    // Create the ViewModel with RecipePreferences using the factory
+    // Initialize FatSecretAuth (replace with your actual clientId and clientSecret)
+    val fatSecretAuth = FatSecretAuth(
+        clientId = "5b81eadb13854e29be79461062dee899 ",
+        clientSecret = "6d12db0056da45548837d9dae8ea9a74"
+    )
+
+    // Create FatSecretApi instance
+    val fatSecretApi: FatSecretApi = createFatSecretApi(fatSecretAuth)
+
+    // Create the ViewModel with both RecipePreferences and FatSecretApi
     val viewModel: RecipeViewModel = viewModel(
-        factory = RecipeViewModelFactory(recipePreferences)
+        factory = RecipeViewModelFactory(
+            recipePreferences = recipePreferences,
+            fatSecretApi = fatSecretApi
+        )
     )
 
     NavHost(

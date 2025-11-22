@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.zybooks.recipeapp.RecipeViewModel
+import com.zybooks.recipeapp.data.NutritionInfo
 import com.zybooks.recipeapp.data.Recipe
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,6 +30,10 @@ fun RecipeDetailScreen(
     onFavoritesClick: () -> Unit
 ) {
     var note by remember { mutableStateOf(recipe.note ?: "") }
+    var showNutritionDialog by remember { mutableStateOf(false) }
+
+    val nutritionInfo by viewModel.nutritionInfo.collectAsState()
+    val isLoadingNutrition by viewModel.isLoadingNutrition.collectAsState()
 
     Scaffold(
         topBar = {
@@ -53,6 +57,7 @@ fun RecipeDetailScreen(
                 .padding(padding)
                 .fillMaxSize()
         ) {
+            // --- Recipe image and title ---
             Box(modifier = Modifier.fillMaxWidth()) {
                 recipe.imageResId?.let { imageId ->
                     Image(
@@ -99,8 +104,24 @@ fun RecipeDetailScreen(
                 }
             }
 
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // --- Show Nutrition Facts button ---
+            Button(
+                onClick = {
+                    viewModel.fetchNutrition(recipe.title)
+                    showNutritionDialog = true
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text("Show Nutrition Facts")
+            }
+
             Spacer(modifier = Modifier.height(16.dp))
 
+            // --- Ingredients ---
             Text(text = "Ingredients", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
             Card(
@@ -116,6 +137,7 @@ fun RecipeDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // --- Instructions ---
             Text(text = "Instructions", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
             Card(
@@ -129,6 +151,7 @@ fun RecipeDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // --- Notes ---
             Text(text = "Notes", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
             Card(
@@ -141,7 +164,7 @@ fun RecipeDetailScreen(
                     value = note,
                     onValueChange = {
                         note = it
-                        viewModel.updateNote(recipe, it) // directly update the ViewModel
+                        viewModel.updateNote(recipe, it)
                     },
                     placeholder = { Text("Tap here to add notes...") },
                     modifier = Modifier
@@ -161,6 +184,42 @@ fun RecipeDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
         }
+
+        // --- Nutrition Facts Dialog ---
+        if (showNutritionDialog) {
+            AlertDialog(
+                onDismissRequest = { showNutritionDialog = false },
+                confirmButton = {
+                    TextButton(onClick = { showNutritionDialog = false }) {
+                        Text("Close")
+                    }
+                },
+                title = { Text(text = "Nutrition Facts") },
+                text = {
+                    Column {
+                        if (isLoadingNutrition) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                CircularProgressIndicator()
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("Loading...")
+                            }
+                        } else if (nutritionInfo != null) {
+                            nutritionInfo?.let { info: NutritionInfo ->
+                                Text("Calories: ${info.calories}")
+                                Text("Fat: ${info.fat}")
+                                Text("Protein: ${info.protein}")
+                                Text("Carbs: ${info.carbs}")
+                                Text("Serving Size: ${info.servingSize}")
+                            }
+                        } else {
+                            Text("Failed to load nutrition info.")
+                        }
+                    }
+                }
+            )
+        }
     }
 }
-
