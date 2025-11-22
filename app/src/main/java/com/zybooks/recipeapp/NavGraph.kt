@@ -27,7 +27,7 @@ fun NavGraph() {
 
     // Initialize FatSecretAuth (replace with your actual clientId and clientSecret)
     val fatSecretAuth = FatSecretAuth(
-        clientId = YOUR_CLIENT_ID",
+        clientId = "YOUR_CLIENT_ID",
         clientSecret = "YOUR_SECRET_ID"
     )
 
