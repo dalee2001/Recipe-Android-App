@@ -22,5 +22,7 @@ data class Recipe(
     val ingredients: List<String>,     // List of ingredient names
     val instructions: String,          // Step-by-step instructions
     val imageResId: Int? = null,       // Optional local drawable resource ID
-    var isFavorite: Boolean = false    // Tracks if recipe is favorited
+    var isFavorite: Boolean = false,    // Tracks if recipe is favorited
+    var note: String = ""
+
 )

@@ -2,16 +2,28 @@ package com.zybooks.recipeapp
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.zybooks.recipeapp.data.RecipePreferences
 import com.zybooks.recipeapp.screens.FavoritesScreen
 import com.zybooks.recipeapp.screens.RecipeDetailScreen
 import com.zybooks.recipeapp.screens.RecipeGalleryScreen
 
 @Composable
-fun NavGraph(viewModel: RecipeViewModel) {
+fun NavGraph() {
     val navController = rememberNavController()
+    val context = LocalContext.current
+
+    // Initialize RecipePreferences
+    val recipePreferences = RecipePreferences(context)
+
+    // Create the ViewModel with RecipePreferences using the factory
+    val viewModel: RecipeViewModel = viewModel(
+        factory = RecipeViewModelFactory(recipePreferences)
+    )
 
     NavHost(
         navController = navController,
@@ -26,26 +38,26 @@ fun NavGraph(viewModel: RecipeViewModel) {
                     viewModel.selectRecipe(recipe)
                     navController.navigate("detail/${recipe.id}")
                 },
-                onFavoritesClick = {
-                    navController.navigate("favorites")
-                }
+                onFavoritesClick = { navController.navigate("favorites") }
             )
         }
 
         // Recipe Detail Screen
         composable("detail/{recipeId}") { backStackEntry ->
             val recipeId = backStackEntry.arguments?.getString("recipeId")?.toIntOrNull()
-            val recipe = viewModel.recipes.collectAsState().value.find { it.id == recipeId }
-            recipe?.let {
+            val selectedRecipe = viewModel.recipes.collectAsState().value.find { it.id == recipeId }
+
+            selectedRecipe?.let { recipe ->
                 RecipeDetailScreen(
-                    recipe = it,
+                    recipe = recipe,
+                    viewModel = viewModel,
                     onBackClick = { navController.popBackStack() },
-                    onFavoritesClick = { viewModel.toggleFavorite(it) } // HERE
+                    onFavoritesClick = { viewModel.toggleFavorite(recipe) }
                 )
             }
         }
 
-        // Favorites Screen (placeholder)
+        // Favorites Screen
         composable("favorites") {
             val favoriteRecipes = viewModel.recipes.collectAsState().value.filter { it.isFavorite }
             FavoritesScreen(
@@ -57,6 +69,5 @@ fun NavGraph(viewModel: RecipeViewModel) {
                 }
             )
         }
-
     }
 }

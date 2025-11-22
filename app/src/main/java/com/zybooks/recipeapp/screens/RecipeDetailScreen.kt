@@ -9,7 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -17,16 +17,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.zybooks.recipeapp.RecipeViewModel
 import com.zybooks.recipeapp.data.Recipe
-import androidx.compose.material3.TopAppBarDefaults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeDetailScreen(
     recipe: Recipe,
+    viewModel: RecipeViewModel,
     onBackClick: () -> Unit,
     onFavoritesClick: () -> Unit
 ) {
+    var note by remember { mutableStateOf(recipe.note ?: "") }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -61,7 +65,6 @@ fun RecipeDetailScreen(
                     )
                 }
 
-                // Gradient overlay
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -81,7 +84,6 @@ fun RecipeDetailScreen(
                         .padding(16.dp)
                 )
 
-                // Heart icon button for favorites
                 IconButton(
                     onClick = onFavoritesClick,
                     modifier = Modifier
@@ -99,11 +101,7 @@ fun RecipeDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Ingredients
-            Text(
-                text = "Ingredients",
-                style = MaterialTheme.typography.titleMedium
-            )
+            Text(text = "Ingredients", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -118,11 +116,7 @@ fun RecipeDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Instructions
-            Text(
-                text = "Instructions",
-                style = MaterialTheme.typography.titleMedium
-            )
+            Text(text = "Instructions", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -134,6 +128,39 @@ fun RecipeDetailScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            Text(text = "Notes", style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.height(8.dp))
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 100.dp),
+                elevation = CardDefaults.cardElevation(2.dp)
+            ) {
+                TextField(
+                    value = note,
+                    onValueChange = {
+                        note = it
+                        viewModel.updateNote(recipe, it) // directly update the ViewModel
+                    },
+                    placeholder = { Text("Tap here to add notes...") },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(8.dp),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent,
+                        cursorColor = Color.Black
+                    )
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 }
+
